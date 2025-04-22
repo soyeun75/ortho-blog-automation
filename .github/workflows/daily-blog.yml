@@ -1,0 +1,23 @@
+name: Daily Blog Posting
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # UTC 6시 → 한국 오후 3시
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Make script executable
+        run: chmod +x get_today_title.sh
+
+      - name: Install Make
+        run: sudo apt update && sudo apt install -y make
+
+      - name: Run Daily Blog Automation
+        run: make post_blog
